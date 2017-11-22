@@ -1,3 +1,4 @@
 *.xlsx
+raw/
 .ipynb_checkpoints/
 *.csv
