@@ -11,12 +11,6 @@ class User(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=15, blank=True)
 
 
-class SurveyResponse(models.Model):
-    survey_id = models.ForeignKey(Survey)
-    user_id = models.ForeignKey(User)
-    time_taken = models.DateTimeField()
-
-
 SURVEY_LANGUAGES = (
     ('ENG', 'English'),
     ('TAM', 'Tamil')
@@ -25,7 +19,25 @@ SURVEY_LANGUAGES = (
 
 class Survey(models.Model):
     survey_id = models.AutoField(primary_key=True)
-    language = models.CharField(choices=SURVEY_LANGUAGES)
+    language = models.CharField(choices=SURVEY_LANGUAGES, max_length=5)
+
+
+class SurveyResponse(models.Model):
+    survey_id = models.ForeignKey(Survey)
+    user_id = models.ForeignKey(User)
+    time_taken = models.DateTimeField()
+
+
+QUESTION_TYPES = (
+    ('BOOL', 'Boolean'),
+    ('RATE', 'Rating'),
+    ('TEXT', 'Text')
+)
+
+
+class Question(models.Model):
+    question_id = models.AutoField(primary_key=True)
+    answer_type = models.CharField(choices=QUESTION_TYPES, max_length=5)
 
 
 class Answer(models.Model):
@@ -44,16 +56,6 @@ class SurveyQuestionMap(models.Model):
     text_question = models.TextField(max_length=1024)  # question text in the survey's language
 
 
-QUESTION_TYPES = (
-    ('BOOL', 'Boolean'),
-    ('RATE', 'Rating'),
-    ('TEXT', 'Text')
-)
-
-
-class Question(models.Model):
-    question_id = models.AutoField(primary_key=True)
-    answer_type = models.CharField(choices=QUESTION_TYPES)
 
 
 
