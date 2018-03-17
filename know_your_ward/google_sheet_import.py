@@ -45,7 +45,7 @@ for row in list_of_rows:  # iterate over user responses
     survey_response = SurveyResponse(survey=survey, user=user)
     survey_response.save()
     answer = Answer(
-        question=question,
+        question=survey_question_map,
         survey_response=survey_response,
         bool_answer=True if response == "Yes" else False)
     answer.save()
